@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <title>HaBB Perfume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&family=Noto+Sans+JP&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="footer.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            background-color: #000023;
+            font-family: 'Readex Pro', sans-serif;
+            font-weight: 500;
+            overflow-x: hidden;
+        }
+
+        main {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+            background: white;
+        }
+
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: transparent;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            transform: translateY(0);
+        }
+
+        nav.scrolled {
+            background-color: #000023;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 12px 24px;
+        }
+
+        .nav-left a {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 4px;
+            transition: color 0.3s ease;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-left a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+            width: 60%;
+            height: 2px;
+            background-color: white;
+            transition: transform 0.3s ease;
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .nav-left a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-center {
+            flex: 0;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .nav-left {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .nav-left a:hover {
+            color: #ddd;
+        }
+
+        nav.hide-on-scroll {
+            transform: translateY(-100%);
+        }
+
+        .drawer-wrapper {
+            position: relative;
+        }
+
+        .drawer-trigger {
+            position: relative;
+            z-index: 110;
+        }
+
+        .drawer {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100vw;
+            background-color: #000033;
+            padding: 15px 60px;
+            gap: 40px;
+            justify-content: flex-start;
+            border-top: 1px solid #333;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            z-index: 90;
+            animation: slideDown 0.25s ease-out forwards;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+
+        .drawer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .drawer a:hover {
+            color: #ddd;
+        }
+
+        .drawer-wrapper:hover .drawer {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .drawer.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .logo {
+            height: 30px;
+            object-fit: contain;
+            margin-top: 10px;
+            max-width: 100%;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            margin-bottom: 0 !important;
+        }
+
+        .hero-slider {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .slide {
+            width: 100vw;
+            flex-shrink: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: black;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: zoomPan 10s ease-in-out infinite;
+        }
+
+        @keyframes zoomPan {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .hero-content {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        .view-btn {
+            padding: 14px 36px;
+            font-size: 18px;
+            background-color: #ffffff;
+            color: #000023;
+            cursor: pointer;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            border-radius: 50px;
+            border: none;
+            box-shadow: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .view-btn:hover {
+            background-color: #000023;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .sale-banner {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #000023;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite ease-in-out;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.85;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            right: 300px;
+            transform: translateX(-50%);
+            z-index: 20;
+            animation: bounce 1.5s infinite;
+            cursor: pointer;
+            opacity: 0.7;
+            font-size: 15px;
+            opacity: 1;
+            color: #fff;
+        }
+
+        .scroll-down.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        section {
+            text-align: center;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            visibility: hidden;
+            will-change: opacity, transform;
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .featured-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .featured {
+            height: 100vh;
+            display: flex;
+            background-color: #fff;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        .featured-wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .promo-preview {
+            flex: 1;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .promo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.4s ease;
+            opacity: 1;
+        }
+
+        .right-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .right-content h2 {
+            font-size: 40px;
+            font-weight: 500;
+            letter-spacing: .1em;
+            margin-bottom: 40px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .product-card {
+            width: calc(33.333% - 20px);
+            max-width: 220px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-card h3 {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .product-card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .promo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.4s ease;
+            opacity: 1;
+        }
+
+        .promo-preview img.fade-out {
+            opacity: 0;
+        }
+
+        .story-video {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .story-video-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .story-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0) 100%);
+            display: flex;
+            align-items: center;
+            padding-left: 80px;
+        }
+
+        .story-text {
+            color: white;
+            max-width: 600px;
+        }
+
+        .story-text h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .story-text p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .testimonials {
+            margin: 0;
+            background: linear-gradient(0deg, #000023 0%, #1f286c 100%);
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            color: white;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.7), 0 1px 2px #1f286c;
+        }
+
+        .testimonial-tiktok-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            justify-content: center;
+            max-width: 1100px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .testimonial-tiktok-card {
+            background-color: #000023;
+            color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            padding: 20px 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 14px;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-tiktok-card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-tiktok-card blockquote {
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .tiktok-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .tiktok-text {
+            font-family: 'Readex Pro', sans-serif;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .tiktok-title a {
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .tiktok-title a:hover {
+            color: #ccc;
+        }
+
+        .tiktok-caption a {
+            font-size: 14px;
+            font-weight: 400;
+            color: #ccc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .testimonial-tiktok-card blockquote {
+            margin: 0;
+        }
+
+        .instagram-feed {
+            background-color: #000023;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .instagram-feed h2 {
+            color: white;
+            margin-bottom: 40px;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .insta-embed-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .insta-embed-grid iframe {
+            border: none;
+            border-radius: 12px;
+            width: 320px;
+            height: 420px;
+            overflow: hidden;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .insta-embed-grid iframe:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        .instagram-feed p {
+            color: #ccc;
+            margin-top: 40px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .insta-embed-grid {
+                gap: 20px;
+            }
+
+            .insta-embed-grid iframe {
+                width: 90%;
+                max-width: 320px;
+            }
+        }
+
+        .newsletter {
+            background-color: #0d0d26;
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .newsletter h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .newsletter p {
+            font-size: 16px;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .newsletter form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .newsletter input[type="email"] {
+            padding: 14px 18px;
+            font-size: 16px;
+            width: 280px;
+            max-width: 90%;
+            border: 1px solid #444;
+            border-radius: 30px;
+            background-color: #1a1a3d;
+            color: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter input[type="email"]::placeholder {
+            color: #999;
+        }
+
+        .newsletter input[type="email"]:focus {
+            outline: none;
+            border-color: #b28dff;
+        }
+
+        .newsletter button {
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(145deg, #8a2be2, #5c1d9b);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .newsletter button:hover {
+            background: linear-gradient(145deg, #5c1d9b, #8a2be2);
+            transform: scale(1.05);
+        }
+
+        .newsletter small {
+            display: block;
+            margin-top: 20px;
+            color: #777;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav id="navbar">
+            <div class="nav-left">
+                <a href="index.html">Home</a>
+
+                <div class="drawer-wrapper">
+                    <a href="shop.html" class="drawer-trigger">Shop</a>
+                </div>
+                <div class="drawer horizontal-drawer shop-drawer">
+                    <a href="shop.html?category=all">All</a>
+                    <a href="shop.html?category=best">Best Sellers</a>
+                    <a href="shop.html?category=new">New Arrivals</a>
+                </div>
+
+                <div class="drawer-wrapper">
+                    <a href="about.html" class="drawer-trigger">About</a>
+                </div>
+
+                <div class="drawer horizontal-drawer about-drawer">
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Visit Us</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                </div>
+            </div>
+
+            <div class="nav-center">
+                <a href="index.html">
+                    <img src="assets/HaBBLogoWhite.png" alt="HaBB Logo" class="logo" />
+                </a>
+            </div>
+
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-slider">
+            <div class="slide"><img src="assets/HaBBYachtMoodBanner.jpg" alt="Slide 1" /></div>
+            <div class="slide"><img src="assets/HaBBBussmaBanner.jpg" alt="Slide 2" /></div>
+            <div class="slide"><img src="assets/HaBBMadawiBanner.jpg" alt="Slide 3" /></div>
+        </div>
+        <div class="hero-content">
+            <div class="sale-banner fade-in-section">Super Sale Ongoing!</div>
+            <a href="shop.html" class="view-btn" class="fade-in-section">View Sale</a>
+        </div>
+        <div class="scroll-down" onclick="document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });">
+            Featured Selections
+            <br>
+            ⌄
+        </div>
+    </section>
+
+    <main>
+        <section class="featured" id="featured">
+            <div class="featured-wrapper">
+                <div class="promo-preview">
+                    <img id="promo-image" src="assets/HaBBBussmaPreview.jpg" alt="Promo Image">
+                </div>
+
+                <div class="right-content">
+                    <h2>Featured Selections</h2>
+                    <div class="featured-grid">
+                        <div class="product-card fade-in-section" data-promo="assets/HaBBBussmaPreview.jpg">
+                            <a href="product.html?name=bussma-95-ml"><img src="assets/HaBBBussmaProd.webp"
+                                    alt="Bussma"></a>
+                            <h3>Bussma</h3>
+                            <p>Create an Impression.</p>
+                        </div>
+                        <div class="product-card fade-in-section" data-promo="assets/HaBBBlueMoonPreview.jpg">
+                            <a href="product.html?name=blue-moon-100-ml"><img src="assets/HaBBBlueMoonProd.webp"
+                                    alt="Blue Moon"></a>
+                            <h3>Blue Moon</h3>
+                            <p>Rare Moments, Endless Magic.</p>
+                        </div>
+                        <div class="product-card fade-in-section" data-promo="assets/HaBBArabianKnightPreview.jpg">
+                            <a href="product.html?name=arabian-knight-100-ml"><img
+                                    src="assets/HaBBArabianKnightProd.webp" alt="Arabian Knight"></a>
+                            <h3>Arabian Knight</h3>
+                            <p>Majesty in Simplicity.</p>
+                        </div>
+                        <div class="product-card fade-in-section" data-promo="assets/HaBBYachtMoodPreview.jpg">
+                            <a href="product.html?name=yacht-mood-75-ml"><img src="assets/HaBBYachtMoodProd2.png"
+                                    alt="Yacht Mood"></a>
+                            <h3>Yacht Mood</h3>
+                            <p>Quintessentially Fresh.</p>
+                        </div>
+                        <div class="product-card fade-in-section" data-promo="assets/HaBBResalaPreview.jpg">
+                            <a href="product.html?name=resala-100-ml"><img src="assets/HaBBResalaProd.webp"
+                                    alt="Resala"></a>
+                            <h3>Resala</h3>
+                            <p>A Whiff of Eloquent Emotions.</p>
+                        </div>
+                        <div class="product-card fade-in-section" data-promo="assets/HaBBMadawiPreview.jpg">
+                            <a href="product.html?name=madawi-100-ml"><img src="assets/HaBBMadawiProd.jpg"
+                                    alt="Madawi"></a>
+                            <h3>Madawi</h3>
+                            <p>Every Woman Is a Star.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="story-video">
+            <div class="story-video-container">
+                <video autoplay muted loop playsinline class="story-video-bg">
+                    <source src="assets/HaBBYatchMoodVid.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="story-overlay">
+                    <div class="story-text fade-in-section">
+                        <h2>About Us</h2>
+                        <p>
+                            HaBB isn’t just a boutique — it’s a statement. Our fragrances are unapologetically bold,
+                            rooted in heritage, and built to turn heads. Every bottle screams confidence and class,
+                            blending rich Middle Eastern depth with sleek, modern minimalism.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <h2>What Our Clients Say</h2>
+            <div class="testimonial-tiktok-grid">
+                <div class="testimonial-tiktok-card fade-in-section">
+                    <div class="tiktok-wrapper">
+                        <div class="tiktok-text tiktok-title"><a target="_blank" title="@aromatix.neeb"
+                                href="https://www.tiktok.com/@aromatix.neeb?refer=embed">@aromatix.neeb</a></div>
+                        <blockquote class="tiktok-embed"
+                            cite="https://www.tiktok.com/@aromatix.neeb/video/7270307652197190958"
+                            data-video-id="7270307652197190958">
+                            <section>
+                                <a target="_blank" title="@aromatix.neeb"
+                                    href="https://www.tiktok.com/@aromatix.neeb?refer=embed">@aromatix.neeb</a>
+                                <br>
+                            </section>
+                        </blockquote>
+                        <div class="tiktok-text tiktok-caption"><a href="product.html?name=solid-black-100-ml">Get Solid
+                                Black</a></div>
+                    </div>
+                </div>
+                <div class="testimonial-tiktok-card fade-in-section">
+                    <div class="tiktok-wrapper">
+                        <div class="tiktok-text tiktok-title"><a target="_blank" title="@noseyourscent"
+                                href="https://www.tiktok.com/@noseyourscent?refer=embed">@noseyourscent</a></div>
+                        <blockquote class="tiktok-embed"
+                            cite="https://www.tiktok.com/@noseyourscent/video/7461771725966036267"
+                            data-video-id="7461771725966036267">
+                            <section>
+                                <a target="_blank" title="@noseyourscent"
+                                    href="https://www.tiktok.com/@noseyourscent?refer=embed">@noseyourscent</a>
+                                <br>
+                            </section>
+                        </blockquote>
+                        <div class="tiktok-text tiktok-caption"><a href="product.html?name=sultani-100-ml">Get
+                                Sultani</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-tiktok-card fade-in-section">
+                    <div class="tiktok-wrapper">
+                        <div class="tiktok-text tiktok-title"><a target="_blank" title="@tjtalksscents"
+                                href="https://www.tiktok.com/@tjtalksscents?refer=embed">@tjtalksscents</a></div>
+                        <blockquote class="tiktok-embed"
+                            cite="https://www.tiktok.com/@tjtalksscents/video/7483628601787665686"
+                            data-video-id="7483628601787665686">
+                            <section>
+                                <a target="_blank" title="@tjtalksscents"
+                                    href="https://www.tiktok.com/@tjtalksscents?refer=embed">@tjtalksscents</a>
+                                <br>
+                            </section>
+                        </blockquote>
+                        <div class="tiktok-text tiktok-caption"><a href="product.html?name=madawi-100-ml">Get Madawi</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script async src="https://www.tiktok.com/embed.js"></script>
+            </div>
+        </section>
+
+        <section class="instagram-feed">
+            <h2>Follow Us on Instagram</h2>
+
+            <div class="insta-embed-grid fade-in-section">
+                <iframe src="https://www.instagram.com/p/DMDSobZS8O8/embed" allowtransparency="true" scrolling="no"
+                    frameborder="0"></iframe>
+                <iframe src="https://www.instagram.com/p/DMBWL5VtCoj/embed" allowtransparency="true" scrolling="no"
+                    frameborder="0"></iframe>
+                <iframe src="https://www.instagram.com/p/DLvmay4B2RZ/embed" allowtransparency="true" scrolling="no"
+                    frameborder="0"></iframe>
+            </div>
+
+            <p>Tag us <strong>@habb.perfume</strong> to be featured!</p>
+        </section>
+
+        <section class="newsletter">
+            <h2>Stay Updated</h2>
+            <p>Get exclusive drops, VIP-only offers, and the first whiff of new releases.</p>
+
+            <form>
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+
+            <small>No spam. Just good scent & better deals.</small>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 HaBB. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="contact.html"">Contact</a>
+                </div>
+                <p class=" disclaimer">
+                    This website was created for educational purposes only. All fragrance product images and
+                    branding
+                    are
+                    credited to <strong>Arabian Oud</strong>.
+                    </p>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="back-to-top-btn">Back to
+                        top</button>
+            </div>
+    </footer>
+
+    <script>
+        const navbar = document.getElementById('navbar'); //get navbar
+        const slider = document.querySelector('.hero-slider'); //get slider
+        const slides = document.querySelectorAll('.slide'); //get all slides
+        let currentSlide = 0; //init current slide
+
+        slider.style.width = `${slides.length * 100}vw`; //set slider width
+
+        //auto slide every 5 secs
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length; //update current slide
+            slider.style.transform = `translateX(-${currentSlide * 100}vw)`; //move slider
+        }, 5000);
+
+        let lastScrollY = window.scrollY; //track last scroll position
+        const scrollArrow = document.querySelector('.scroll-down'); //get scroll arrow
+        let ticking = false; //prevent multiple scroll events
+
+        //handle scroll events
+        function handleScroll() {
+            const currentScrollY = window.scrollY; //get current position
+
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                navbar.classList.add('hide-on-scroll'); //hide nav on down
+            } else {
+                navbar.classList.remove('hide-on-scroll'); //show nav up
+                if (currentScrollY > 80) {
+                    navbar.classList.add('scrolled'); //add scrolled class
+                } else {
+                    navbar.classList.remove('scrolled'); //remove scrolled class
+                }
+            }
+
+            lastScrollY = currentScrollY; //update last scroll position
+            ticking = false; //reset
+
+            //show/hide scroll arrow
+            if (currentScrollY > 50) {
+                scrollArrow.classList.add('hidden'); //hide arrow if go down
+            } else {
+                scrollArrow.classList.remove('hidden'); //show arrow if up
+            }
+        }
+
+        //throttle scroll events
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(handleScroll); //request animation frame
+                ticking = true; //set ticking
+            }
+        });
+
+        //fade in effects
+        const fadeSections = document.querySelectorAll('.fade-in-section'); //get fade sections
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible'); //add visible class
+                    observer.unobserve(entry.target); //stop observing
+                }
+            });
+        }, {
+            threshold: 0.1 //trigger when 10% visible
+        });
+
+        fadeSections.forEach(section => {
+            observer.observe(section); //observe each section
+        });
+
+        const promoImage = document.getElementById("promo-image"); //get promo image
+        const productCards = document.querySelectorAll(".product-card"); //get product cards
+
+        productCards.forEach(card => {
+            card.addEventListener("mouseover", () => {
+                const newSrc = card.getAttribute("data-promo"); //get promo src
+                if (promoImage.src.includes(newSrc)) return; //skip if same src
+
+                promoImage.classList.add("fade-out"); //add fade out class
+                setTimeout(() => {
+                    promoImage.setAttribute("src", newSrc); //change src
+                    promoImage.classList.remove("fade-out"); //remove fade out class
+                }, 200);
+            });
+        });
+
+        const triggers = document.querySelectorAll('.drawer-trigger'); //get drawer triggers
+        const drawers = document.querySelectorAll('.drawer'); //get drawers
+
+        //store timeout references per drawer
+        const drawerTimeouts = new Map();
+
+        triggers.forEach((trigger, index) => {
+            const drawer = drawers[index]; //get corresponding drawer
+
+            trigger.addEventListener('mouseenter', () => {
+                clearTimeout(drawerTimeouts.get(drawer)); //clear timeout
+                drawer.classList.add('show'); //show drawer
+            });
+
+            trigger.addEventListener('mouseleave', () => {
+                drawerTimeouts.set(drawer, setTimeout(() => {
+                    if (!drawer.matches(':hover')) {
+                        drawer.classList.remove('show'); //hide drawer
+                    }
+                }, 300));
+            });
+
+            drawer.addEventListener('mouseenter', () => {
+                clearTimeout(drawerTimeouts.get(drawer)); //clear timeout
+                drawer.classList.add('show'); //show drawer
+            });
+
+            drawer.addEventListener('mouseleave', () => {
+                drawerTimeouts.set(drawer, setTimeout(() => {
+                    if (!trigger.matches(':hover')) {
+                        drawer.classList.remove('show'); //hide drawer
+                    }
+                }, 300));
+            });
+        });
+
+        const nav = document.getElementById('navbar'); //get navbar
+        const navHoverElements = document.querySelectorAll('.nav-left a, .drawer, .drawer-wrapper'); //get hover elements
+
+        navHoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                nav.classList.add('scrolled'); //add scrolled class
+            });
+
+            el.addEventListener('mouseleave', () => {
+                if (window.scrollY < 80) {
+                    const anyDrawerHovered = Array.from(document.querySelectorAll('.drawer')).some(drawer =>
+                        drawer.matches(':hover') //check if any drawer is hovered
+                    );
+
+                    if (!anyDrawerHovered) {
+                        clearTimeout(nav._scrolledTimeout); //clear timeout
+                        nav._scrolledTimeout = setTimeout(() => {
+                            nav.classList.remove('scrolled'); //remove scrolled class
+                        }, 500);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

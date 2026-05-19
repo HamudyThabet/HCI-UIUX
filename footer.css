@@ -1,0 +1,47 @@
+* {
+    overscroll-behavior: none;
+}
+
+.footer {
+    background-color: #000023;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    font-family: 'Readex Pro', sans-serif;
+    font-weight: 500;
+    padding-bottom: 0;
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+.footer-links a {
+    color: #ccc;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer .disclaimer {
+    margin-top: 10px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    font-style: italic;
+}
+
+.back-to-top-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    width: 100px;
+    height: 36px;
+    cursor: pointer;
+    color: #000050;
+    font-family: 'Readex Pro', sans-serif;
+}

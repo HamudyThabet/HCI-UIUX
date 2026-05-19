@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+    background: white;
+}
+
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background-color: #000023;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+}
+
+.nav-left a {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 4px;
+    transition: color 0.3s ease;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-left a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    width: 60%;
+    height: 2px;
+    background-color: white;
+    transition: transform 0.3s ease;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.nav-left a:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+.nav-center {
+    flex: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 50px;
+    object-fit: contain;
+}
+
+.nav-left {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+
+.nav-left a:hover {
+    color: #ddd;
+}
+
+.logo {
+    height: 30px;
+    object-fit: contain;
+    margin-top: 10px;
+    max-width: 100%;
+}
+
+.drawer-wrapper {
+    position: relative;
+}
+
+.drawer-trigger {
+    position: relative;
+    z-index: 110;
+}
+
+.drawer {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100vw;
+    background-color: #000033;
+    padding: 15px 60px;
+    gap: 40px;
+    justify-content: flex-start;
+    border-top: 1px solid #333;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    z-index: 90;
+}
+
+.drawer a {
+    color: white;
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s ease;
+}
+
+.drawer a:hover {
+    color: #ddd;
+}
+
+.drawer-wrapper:hover .drawer {
+    display: flex;
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.drawer {
+    animation: slideDown 0.25s ease-out forwards;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+.drawer.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <title>Visit Us | HaBB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="nav.css" />
+    <link rel="stylesheet" href="footer.css" />
+    <style>
+        body {
+            font-family: 'Readex Pro', sans-serif;
+            background-color: #000023;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            background: #fff;
+            padding: 80px 20px 40px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #000033;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .contact-item h3 {
+            color: #000033;
+            margin-bottom: 10px;
+        }
+
+        .contact-item p,
+        .contact-item a {
+            font-size: 16px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 300px;
+            border: 0;
+            border-radius: 8px;
+        }
+
+        .contact-form {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        .contact-form button {
+            background-color: #000033;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .socials {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .socials a img {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav id="navbar">
+            <div class="nav-left">
+                <a href="index.html">Home</a>
+
+                <div class="drawer-wrapper">
+                    <a href="shop.html" class="drawer-trigger">Shop</a>
+                </div>
+                <div class="drawer horizontal-drawer shop-drawer">
+                    <a href="shop.html?category=all">All</a>
+                    <a href="shop.html?category=best">Best Sellers</a>
+                    <a href="shop.html?category=new">New Arrivals</a>
+                </div>
+
+                <div class="drawer-wrapper">
+                    <a href="about.html" class="drawer-trigger">About</a>
+                </div>
+                <div class="drawer horizontal-drawer about-drawer">
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Visit Us</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                </div>
+            </div>
+
+            <div class="nav-center">
+                <a href="index.html">
+                    <img src="assets/HaBBLogoWhite.png" alt="HaBB Logo" class="logo" />
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Visit Us</h1>
+
+        <div class="contact-grid">
+            <div class="contact-item">
+                <h3>📍 Address</h3>
+                <p>XV3X+643, Gil Carlos St, Baliwag, 3006 Bulacan, Philippines</p>
+
+                <h3>🕒 Opening Hours</h3>
+                <p>Monday - Saturday: 10:00 AM – 7:00 PM<br />Sunday: Closed</p>
+
+                <h3>📞 Call Us</h3>
+                <p><a href="tel:+639123456789">+63 912 345 6789</a></p>
+
+                <h3>✉️ Email Us</h3>
+                <p><a href="mailto:helpsupport@habbph.com">helpsupport@habbph.com</a></p>
+
+                <h3>🔗 Follow Us</h3>
+                <div class="socials">
+                    <a href="#" target="_blank"><img src="assets/facebook.png" alt="Facebook"></a>
+                    <a href="#" target="_blank"><img src="assets/instagram.png" alt="Instagram"></a>
+                    <a href="#" target="_blank"><img src="assets/twitter.png" alt="X"></a>
+                    <a href="#" target="_blank"><img src="assets/youtube.png" alt="Youtube"></a>
+                    <a href="#" target="_blank"><img src="assets/tiktok.png" alt="Tiktok"></a>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3704.1393433926287!2d120.89522707493106!3d14.953012685576141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33965554bc2a26bf%3A0x6d345c86991732cd!2sBaliuag%20University!5e1!3m2!1sen!2sph!4v1752472032657!5m2!1sen!2sph"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h3 style="margin-top: 0;">General Inquiry Form</h3>
+            <form action="mailto:helpsupport@habbph.com" method="POST" enctype="text/plain">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 HaBB. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+        <p class="disclaimer">
+            This website was created for educational purposes only. All fragrance product images and branding are
+            credited to
+            <strong>Arabian Oud</strong>.
+        </p>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="back-to-top-btn">Back to
+            top</button>
+    </footer>
+
+    <script src="nav.js"></script>
+</body>
+
+</html>

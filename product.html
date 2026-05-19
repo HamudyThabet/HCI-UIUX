@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <title>Product Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&family=Noto+Sans+JP&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="product-card.css">
+    <link rel="stylesheet" href="footer.css">
+    <style>
+        body {
+            font-family: 'Readex Pro', sans-serif;
+            font-weight: 500;
+            background-color: #000023;
+        }
+
+        main {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            background: white;
+        }
+
+        .breadcrumb-nav {
+            background-color: #f4f4f4;
+            padding: 10px 40px;
+            font-size: 20px;
+            color: #333;
+            position: relative;
+            top: 65px;
+            z-index: 99;
+        }
+
+        .breadcrumb-left a {
+            text-decoration: none;
+            color: #000033;
+            font-weight: 700;
+        }
+
+        .breadcrumb-left a:hover {
+            text-decoration: underline;
+        }
+
+        .shop-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+            margin-bottom: 40px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .product-layout {
+            padding: 120px 40px 60px;
+            display: flex;
+            gap: 40px;
+        }
+
+        .main-carousel-container {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        .main-carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 28px;
+            color: black;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            background: none;
+            z-index: 5;
+        }
+
+        .main-carousel-arrow.left {
+            left: 0;
+        }
+
+        .main-carousel-arrow.right {
+            right: 0;
+        }
+
+        .main-carousel-slide-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .main-carousel-slide-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .main-carousel-slide-track img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            flex-shrink: 0;
+            border-radius: 10px;
+        }
+
+        .main-carousel-thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .main-carousel-thumbnails img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0.7;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .main-carousel-thumbnails img.active {
+            opacity: 1;
+            border-color: #000033;
+        }
+
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .product-info h1 {
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .review-headers {
+            gap: 0;
+        }
+
+        .review-headers h3 {
+            padding: 0;
+            margin: 0;
+        }
+
+        .review-headers h6 {
+            padding: 0;
+            margin: 0;
+            font-style: italic;
+            color: #666;
+        }
+
+        .product-oneliner {
+            font-size: 18px;
+            color: #666;
+            margin: 5px 0 10px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .product-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #cc0000;
+        }
+
+        .product-original-price {
+            text-decoration: line-through;
+            color: #888;
+            margin-left: 10px;
+        }
+
+        .product-description {
+            line-height: 1.6;
+        }
+
+        .inquire-btn {
+            padding: 14px 36px;
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #000023;
+            cursor: pointer;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            border-radius: 50px;
+            border: none;
+            box-shadow: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .inquire-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .ingredients-box {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+
+        .ingredients-box summary {
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .reviews-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 6px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #fafafa;
+        }
+
+        .reviews-box h3 {
+            margin-top: 0;
+        }
+
+        .review-item {
+            margin-bottom: 10px;
+        }
+
+        .related-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .related-section a {
+            text-decoration: none;
+            color: #000033;
+            font-weight: 700;
+        }
+
+        .related-section a:hover {
+            text-decoration: underline;
+        }
+
+        .suggested-section {
+            padding: 60px 10px;
+            background-color: white;
+        }
+
+        .suggested-section h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: auto;
+            gap: 40px;
+            padding: 0 20px;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .scrollable-carousel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 0 20px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .scrollable-carousel::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .scrollable-carousel::-webkit-scrollbar-thumb {
+            background: #aaa;
+            border-radius: 5px;
+        }
+
+        .product-card {
+            flex: 0 0 calc(25% - 15px);
+            scroll-snap-align: start;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav id="navbar">
+            <div class="nav-left">
+                <a href="index.html">Home</a>
+
+                <div class="drawer-wrapper">
+                    <a href="shop.html" class="drawer-trigger">Shop</a>
+                </div>
+                <div class="drawer horizontal-drawer shop-drawer">
+                    <a href="shop.html?category=all">All</a>
+                    <a href="shop.html?category=best">Best Sellers</a>
+                    <a href="shop.html?category=new">New Arrivals</a>
+                </div>
+
+                <div class="drawer-wrapper">
+                    <a href="about.html" class="drawer-trigger">About</a>
+                </div>
+                <div class="drawer horizontal-drawer about-drawer">
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Visit Us</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                </div>
+            </div>
+
+            <div class="nav-center">
+                <a href="index.html">
+                    <img src="assets/HaBBLogoWhite.png" alt="HaBB Logo" class="logo" />
+                </a>
+            </div>
+        </nav>
+
+        <div id="breadcrumb-nav" class="breadcrumb-nav">
+            <div class="breadcrumb-left">
+                <a href="index.html">Home</a> &gt; <a href="shop.html">Shop</a> &gt; <span
+                    id="breadcrumb-product-name">Product</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="product-layout">
+            <div style="flex: 1;">
+                <div class="main-carousel-container">
+                    <button class="main-carousel-arrow left">&#10094;</button>
+                    <div class="main-carousel-slide-wrapper">
+                        <div id="main-carouselSlideTrack" class="main-carousel-slide-track"></div>
+                    </div>
+                    <button class="main-carousel-arrow right">&#10095;</button>
+                </div>
+                <div class="main-carousel-thumbnails" id="main-carouselThumbnails"></div>
+            </div>
+
+            <div class="product-info">
+                <h1 id="productName"></h1>
+                <p id="productOneliner" class="product-oneliner"></p>
+
+                <div class="product-rating">
+                    <span id="productRating">★ 0.0</span>
+                    <span id="productNumReviews">(0 reviews)</span>
+                </div>
+
+                <div>
+                    <span id="productPrice" class="product-price">₱0.00</span>
+                    <span id="productOriginalPrice" class="product-original-price">₱0.00</span>
+                </div>
+
+                <div id="productDescription" class="product-description"></div>
+
+                <button class="inquire-btn" onclick="window.location.href='contact.html'">Inquire Now</button>
+
+                <details class="ingredients-box">
+                    <summary>Ingredients</summary>
+                    <div id="productIngredients" style="margin-top: 10px;"></div>
+                </details>
+
+                <div class="review-headers">
+                    <h3>Customer Reviews</h3>
+                    <h6>only reviews with content are displayed.</h6>
+                </div>
+
+                <div class="reviews-box">
+                    <div id="productReviews"></div>
+                </div>
+            </div>
+        </div>
+
+        <section class="suggested-section">
+            <div class="related-section">
+                <h2>Related Fragrances</h2>
+                <a href="shop.html">View all fragrances</a>
+            </div>
+            <div id="suggestedGrid" class="scrollable-carousel"></div>
+        </section>
+
+        <div class="quick-view-modal" id="quickViewModal">
+            <div class="carousel">
+                <button class="carousel-btn left" id="carouselLeftBtn">&#10094;</button>
+
+                <div class="carousel-slide-wrapper">
+                    <div class="carousel-slide-track" id="carouselSlideTrack"></div>
+                </div>
+
+                <button class="carousel-btn right" id="carouselRightBtn">&#10095;</button>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+
+            <h3 id="quickViewName"></h3>
+            <div class="star-rating" id="quickViewStars"></div>
+            <div id="quickViewDetails" class="perfume-details"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 HaBB. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+        <p class="disclaimer">
+            This website was created for educational purposes only. All fragrance product images and branding are
+            credited to <strong>Arabian Oud</strong>.
+        </p>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="back-to-top-btn">Back to
+            top</button>
+    </footer>
+
+    <script src="nav.js"></script>
+    <script src="products.js"></script>
+    <script src="quickview.js"></script>
+    <script>
+        //get url
+        const urlParams = new URLSearchParams(window.location.search);
+        const productKey = urlParams.get('name'); //extract product key
+        const product = products[productKey]; //get product
+
+        //if product not found
+        if (!product) {
+            document.body.innerHTML = '<h2>Product not found.</h2>'; //show error
+            throw new Error('Product not found'); //throw error
+        }
+
+        //populate product details
+        document.getElementById('productName').textContent = product.name; //set name
+        document.getElementById('breadcrumb-product-name').textContent = product.name; //set breadcrumb
+        document.getElementById('productOneliner').textContent = product.oneliner; //set oneliner
+        document.getElementById('productRating').textContent = `★ ${product.rating}`; //set rating
+        document.getElementById('productNumReviews').textContent = `(${product.numReviews} reviews)`; //set reviews
+        document.getElementById('productPrice').textContent = product.price; //set price
+        document.getElementById('productOriginalPrice').textContent = product.originalPrice; //set original price
+        document.getElementById('productDescription').textContent = product.description; //set description
+        document.getElementById('productIngredients').textContent = product.ingredients; //set ingredients
+
+        //render reviews
+        const reviewsHTML = product.reviews.map(review => `<p class="review-item">${review}</p>`).join(''); //create reviews html
+        document.getElementById('productReviews').innerHTML = reviewsHTML; //insert reviews
+
+        //carousel setup
+        let currentIndex = 0; //init index
+        const slideTrack = document.getElementById('main-carouselSlideTrack'); //get slide track
+        const thumbnailsContainer = document.getElementById('main-carouselThumbnails'); //get thumbnails
+
+        //update carousel
+        function updateCarousel(index) {
+            slideTrack.style.transform = `translateX(-${index * 100}%)`; //move track
+            thumbnailsContainer.querySelectorAll('img').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index); //highlight active thumb
+            });
+        }
+
+        //add images to carousel
+        product.images.forEach((imgSrc, idx) => {
+            const slideImg = document.createElement('img'); //create slide img
+            slideImg.src = imgSrc; //set src
+            slideTrack.appendChild(slideImg); //append to track
+
+            const thumb = document.createElement('img'); //create thumb img
+            thumb.src = imgSrc; //set src
+            if (idx === 0) thumb.classList.add('active'); //mark first active
+            thumb.onclick = () => {
+                currentIndex = idx; //update index
+                updateCarousel(currentIndex); //update display
+            };
+            thumbnailsContainer.appendChild(thumb); //append thumb
+        });
+
+        //carousel navigation
+        document.querySelector('.main-carousel-arrow.left').onclick = () => {
+            currentIndex = (currentIndex - 1 + product.images.length) % product.images.length; //move left
+            updateCarousel(currentIndex); //update display
+        };
+
+        document.querySelector('.main-carousel-arrow.right').onclick = () => {
+            currentIndex = (currentIndex + 1) % product.images.length; //move right
+            updateCarousel(currentIndex); //update display
+        };
+
+        updateCarousel(currentIndex); //init carousel
+
+        //suggested products
+        function getSuggestedProducts(baseProduct) {
+            const matches = Object.entries(products)
+                .filter(([key, prod]) => key !== productKey) //exclude current product
+                .map(([key, prod]) => {
+                    const sharedTags = (baseProduct.tags || []).filter(tag =>
+                        (prod.tags || []).includes(tag) //find shared tags
+                    );
+                    const hasSeries = sharedTags.some(tag => tag.toLowerCase().includes('series')); //check for series
+                    return { key, sharedTags, hasSeries }; //return object
+                })
+                .filter(item => item.sharedTags.length > 0); //filter by shared tags
+
+            const prioritized = matches
+                .filter(m => m.hasSeries) //prioritize series
+                .sort(() => Math.random() - 0.5) //randomize order
+                .map(m => m.key); //get keys
+
+            const fallback = matches
+                .filter(m => !m.hasSeries) //nonseries next
+                .sort(() => Math.random() - 0.5) //randomize order
+                .map(m => m.key); //get keys
+
+            return [...prioritized, ...fallback].slice(0, 8); //return top 8
+        }
+
+        const suggestedGrid = document.getElementById("suggestedGrid"); //get suggested grid
+
+        if (product) {
+            const relatedSlugs = getSuggestedProducts(product).slice(0, 8); //get related products
+
+            relatedSlugs.forEach(relatedSlug => {
+                const relatedProduct = products[relatedSlug]; //get related product
+                if (!relatedProduct) return; //skip if not found
+
+                const card = document.createElement('div'); //create card
+                card.className = "product-card"; //set class
+                card.dataset.name = relatedProduct.name; //set data attributes
+                card.dataset.rating = relatedProduct.rating;
+                card.dataset.set = relatedProduct.set;
+                card.dataset.prod = relatedProduct.prod;
+                card.dataset.box = relatedProduct.box;
+                card.dataset.scent = relatedProduct.scent;
+                card.dataset.vibe = relatedProduct.vibe;
+                card.dataset.longevity = relatedProduct.longevity;
+                card.dataset.best = relatedProduct.best;
+
+                card.innerHTML = `
+                <div class="image-wrapper">
+                    <span class="discount-tag">20% off</span>
+                    <a href="product.html?name=${encodeURIComponent(relatedSlug)}">
+                        <img src="${relatedProduct.set}" alt="${relatedProduct.name}">
+                    </a>
+                </div>
+                <p class="product-name">${relatedProduct.name}</p>
+                <p class="discounted-price">${relatedProduct.discountedPrice}</p>
+                <p class="original-price">${relatedProduct.originalPrice}</p>
+            `; //set inner html
+
+                suggestedGrid.appendChild(card); //append card
+            });
+
+            observeCardsOnScroll(); //init observer
+            attachQuickViewListeners(); //attach quick view
+        }
+    </script>
+</body>
+
+</html>

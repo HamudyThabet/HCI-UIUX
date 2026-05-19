@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <title>HaBB Perfume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&family=Noto+Sans+JP&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="product-card.css">
+    <link rel="stylesheet" href="footer.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        main {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Readex Pro', sans-serif;
+            font-weight: 500;
+            background-color: #000023;
+        }
+
+        .hero {
+            position: relative;
+            margin-top: 65px;
+            overflow: hidden;
+            width: 100%;
+            height: auto;
+            margin-bottom: 0 !important;
+        }
+
+        .hero-slider {
+            width: 100%;
+        }
+
+        .slide {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .super-sale-banner-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .super-sale-gradient {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .super-sale-banner-text {
+            position: relative;
+            z-index: 6;
+            margin-left: 5%;
+            color: white;
+            max-width: 400px;
+            pointer-events: auto;
+        }
+
+        .super-sale-banner-text h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .super-sale-banner-text p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .super-sale-banner-text p strong {
+            color: #000033;
+        }
+
+        .right-align-banner {
+            flex-direction: row-reverse;
+        }
+
+        .right-align-banner .super-sale-gradient {
+            left: auto;
+            right: 0;
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
+        }
+
+        .right-align-banner .super-sale-banner-text {
+            margin-left: 0;
+            margin-right: 5%;
+            text-align: right;
+        }
+
+        .shop-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+            margin-bottom: 40px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .price {
+            padding: 8px;
+            font-size: 16px;
+            width: 100px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-family: 'Readex Pro', sans-serif;
+        }
+
+        #searchInput {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 200px;
+            font-family: 'Readex Pro', sans-serif;
+        }
+
+        #search {
+            padding: 8px 12px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #000033;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .limited-keyword {
+            color: #f39c12;
+            font-weight: 700;
+        }
+
+        section {
+            margin-bottom: 100px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .super-sale {
+            margin-bottom: 0;
+            padding: 60px 10px;
+            background-color: white;
+        }
+
+        .super-sale-title {
+            padding-left: 60px;
+            font-size: 38px;
+            font-weight: 700;
+            text-align: left;
+            color: #000023;
+        }
+
+        .breadcrumb {
+            text-align: left;
+            font-size: 20px;
+            margin-bottom: 40px;
+            color: #333;
+            position: relative;
+            z-index: 99;
+        }
+
+        .breadcrumb a {
+            text-decoration: none;
+            color: #000033;
+            font-weight: 700;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+            padding: 0 20px;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fade 0.8s ease-out forwards;
+        }
+
+        .fade-in-delayed {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav id="navbar">
+            <div class="nav-left">
+                <a href="index.html">Home</a>
+
+                <div class="drawer-wrapper">
+                    <a href="shop.html" class="drawer-trigger">Shop</a>
+                </div>
+                <div class="drawer horizontal-drawer shop-drawer">
+                    <a href="shop.html?category=all">All</a>
+                    <a href="shop.html?category=best">Best Sellers</a>
+                    <a href="shop.html?category=new">New Arrivals</a>
+                </div>
+
+                <div class="drawer-wrapper">
+                    <a href="about.html" class="drawer-trigger">About</a>
+                </div>
+                <div class="drawer horizontal-drawer about-drawer">
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Visit Us</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                </div>
+            </div>
+
+            <div class="nav-center">
+                <a href="index.html">
+                    <img src="assets/HaBBLogoWhite.png" alt="HaBB Logo" class="logo" />
+                </a>
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero fade-in">
+            <div class="hero-slider">
+                <div class="super-sale-banner-container">
+                    <div class="super-sale-gradient"></div>
+                    <div class="super-sale-banner-text">
+                        <h2 id="bannerTitle">Super Sale</h2>
+                        <p id="bannerText">
+                            Get <strong>20% OFF</strong> on all our fragrances.<br>
+                            <span class="limited-keyword">Limited</span> stocks. <span
+                                class="limited-keyword">Limited</span> time only.<br>
+                            <em>Smell bold. Inquire now.</em>
+                        </p>
+                    </div>
+                </div>
+                <div class="slide"><img src="assets/SuperSaleBanner.jpg" alt="Super Sale Banner" /></div>
+            </div>
+        </section>
+
+        <section class="super-sale">
+            <h2 class="super-sale-title" id="shopTitle">All Products</h2>
+            <div class="shop-toolbar">
+                <div class="breadcrumb" id="breadcrumb">
+                    <a href="index.html">Home</a> > <a href="shop.html">Shop</a> > All
+                </div>
+                <div id="productCount" style="color: #000033; font-weight: 600;">
+                </div>
+                <div>
+                    <select id="tagFilter" class="price">
+                        <option value="">All Tags</option>
+                        <option value="woody">Woody</option>
+                        <option value="floral">Floral</option>
+                        <option value="fresh">Fresh</option>
+                        <option value="citrus">Citrus</option>
+                        <option value="oud">Oud</option>
+                        <option value="intense">Intense</option>
+                        <option value="spicy">Spicy</option>
+                        <option value="masculine">Masculine</option>
+                        <option value="feminine">Feminine</option>
+                        <option value="unisex">Unisex</option>
+                        <option value="luxury">Luxury</option>
+                        <option value="warm">Warm</option>
+                        <option value="amber">Amber</option>
+                        <option value="powdery">Powdery</option>
+                        <option value="leathery">Leathery</option>
+                        <option value="iris">Iris</option>
+                    </select>
+                    <input type="number" id="minPrice" placeholder="Min ₱" class="price">
+                    <input type="number" id="maxPrice" placeholder="Max ₱" class="price">
+                    <input type="text" id="searchInput" placeholder="Search name...">
+                    <button id="search"><img src="assets/search.png" alt="Search" height="17px" width="17px"></button>
+                </div>
+                <div class="product-grid fade-in-delayed" id="productGrid"></div>
+        </section>
+
+        <div class="quick-view-modal" id="quickViewModal">
+            <div class="carousel">
+                <button class="carousel-btn left" id="carouselLeftBtn">&#10094;</button>
+
+                <div class="carousel-slide-wrapper">
+                    <div class="carousel-slide-track" id="carouselSlideTrack"></div>
+                </div>
+
+                <button class="carousel-btn right" id="carouselRightBtn">&#10095;</button>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+
+            <h3 id="quickViewName"></h3>
+            <div class="star-rating" id="quickViewStars"></div>
+            <div id="quickViewDetails" class="perfume-details"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 HaBB. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p class="disclaimer">
+                This website was created for educational purposes only. All fragrance product images and branding
+                are
+                credited to <strong>Arabian Oud</strong>.
+            </p>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="back-to-top-btn">Back to
+                top</button>
+        </div>
+    </footer>
+
+    <script src="nav.js"></script>
+    <script src="products.js"></script>
+    <script src="quickview.js"></script>
+    <script>
+        //wait for site load
+        document.addEventListener("DOMContentLoaded", () => {
+            //get elements
+            const grid = document.getElementById("productGrid");
+            const bannerTitle = document.getElementById('bannerTitle');
+            const bannerText = document.getElementById('bannerText');
+            const breadcrumb = document.getElementById('breadcrumb');
+            const shopTitle = document.getElementById('shopTitle');
+            const productGrid = document.getElementById("productGrid");
+
+            //get category from url
+            const currentCategory = new URLSearchParams(window.location.search).get('category') || 'all';
+
+            //update shop page
+            function updateShopPage(category) {
+                const bannerContainer = document.querySelector('.super-sale-banner-container');
+
+                //remove right-align class
+                bannerContainer.classList.remove('right-align-banner');
+
+                //add right-align if cat is new
+                if (category === 'new') {
+                    bannerContainer.classList.add('right-align-banner');
+                }
+
+                let title, text, tagFilter, bannerImg, crumb;
+
+                //set values based on cat
+                switch (category) {
+                    case 'best':
+                        title = "Best Sellers";
+                        text = "top-sold fragrances chosen by the HaBB community.";
+                        tagFilter = 'best';
+                        bannerImg = "assets/BestSellersBanner.jpg";
+                        crumb = "Best Sellers";
+                        break;
+                    case 'new':
+                        title = "New Arrivals";
+                        text = "latest additions to our inventory.";
+                        tagFilter = 'new';
+                        bannerImg = "assets/HaBBNewArrivals.jpg";
+                        crumb = "New Arrivals";
+                        break;
+                    default:
+                        title = "Super Sale";
+                        text = `Get <strong>20% OFF</strong> on all our fragrances.<br>
+                            <span class="limited-keyword">Limited</span> time, <span class="limited-keyword">Limited</span> stocks.<br>
+                            <em>Smell bold. Inquire now.</em>`;
+                        tagFilter = null; //no tag
+                        bannerImg = "assets/SuperSaleBanner.jpg";
+                        crumb = "All";
+                        break;
+                }
+
+                //update banner and breadcrumb
+                bannerTitle.textContent = title;
+                bannerText.innerHTML = text;
+                shopTitle.textContent = title;
+                breadcrumb.innerHTML = `<a href="index.html">Home</a> > <a href="shop.html">Shop</a> > ${crumb}`;
+
+                //set ban img
+                document.querySelector(".slide img").src = bannerImg;
+
+                //render products
+                renderProducts(tagFilter);
+            }
+
+            //render products
+            function renderProducts(tagFilter, searchQuery = '') {
+                productGrid.innerHTML = ''; //clear grid
+                let visibleCount = 0; //count visible
+
+                //get price range
+                const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+                const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+
+                //loop through products
+                Object.values(products).forEach(product => {
+                    //check name and tag match
+                    const nameMatch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+                    const matchesTag = !tagFilter || (product.tags && product.tags.includes(tagFilter));
+
+                    //convert price
+                    const discountedPrice = parseFloat(product.discountedPrice.replace(/₱|,/g, '').trim());
+                    const priceMatch = discountedPrice >= minPrice && discountedPrice <= maxPrice;
+
+                    //if all match, create card
+                    if (nameMatch && matchesTag && priceMatch) {
+                        const nameSlug = product.name.toLowerCase().replace(/\s+/g, '-');
+                        const card = document.createElement('div');
+                        card.className = "product-card";
+                        //set data for quick view
+                        card.dataset.name = product.name;
+                        card.dataset.rating = product.rating;
+                        card.dataset.set = product.set;
+                        card.dataset.prod = product.prod;
+                        card.dataset.box = product.box;
+                        card.dataset.scent = product.scent;
+                        card.dataset.vibe = product.vibe;
+                        card.dataset.longevity = product.longevity;
+                        card.dataset.best = product.best;
+
+                        //set inner html for card
+                        card.innerHTML = `
+                        <div class="image-wrapper">
+                            <span class="discount-tag">20% off</span>
+                            <a href="product.html?name=${encodeURIComponent(nameSlug)}">
+                                <img src="${product.set}" alt="${product.name}">
+                            </a>
+                        </div>
+                        <p class="product-name">${product.name}</p>
+                        <p class="discounted-price">${product.discountedPrice}</p>
+                        <p class="original-price">${product.originalPrice}</p>
+                    `;
+                        productGrid.appendChild(card); //add card
+                        visibleCount++; //add count
+                    }
+                });
+
+                //update product count
+                const productCountEl = document.getElementById('productCount');
+                productCountEl.textContent = `${visibleCount} fragrance${visibleCount === 1 ? '' : 's'} found`;
+                observeCardsOnScroll(); //observe cards
+                attachQuickViewListeners(); //attach quick view
+            }
+
+            //search functionality
+            document.getElementById('search').addEventListener('click', () => {
+                const tagFilter = document.getElementById('tagFilter').value; //get tag
+                const searchQuery = document.getElementById('searchInput').value.trim(); //get input
+                renderProducts(tagFilter, searchQuery); //render with filters
+            });
+
+            //init shop page
+            updateShopPage(currentCategory);
+            attachQuickViewListeners(); //attach quick view
+        });
+    </script>
+</body>
+
+</html>
